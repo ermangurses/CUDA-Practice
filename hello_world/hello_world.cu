@@ -9,13 +9,15 @@
 
 __global__ void hello_cuda()
 {
-    printf("Hello CUDA world from thread %d at block %d\n",threadIdx.x,blockIdx.x);
-    
+    printf("Hello CUDA world from thread %d%d%d at block %d%d%d\n",threadIdx.x,threadIdx.y,threadIdx.z,blockIdx.x,blockIdx.y,blockIdx.z);
 }
 
 int main()
 {
-    hello_cuda<<<4,4>>>();
+    dim3 block(2,3,4);
+    dim3 grid(4,3,2);
+
+    hello_cuda<<<grid,block>>>();
     cudaDeviceSynchronize();
     cudaDeviceReset();
 
